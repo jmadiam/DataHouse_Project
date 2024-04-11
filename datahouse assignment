@@ -1,0 +1,112 @@
+import json
+
+# Make JSON a string
+json_str = '''
+{
+  "team": [
+    {
+      "name": "Lance",
+      "attributes": {
+        "intelligence": 1,
+        "strength": 5,
+        "magic": 3,
+        "luck": 1
+      }
+    },
+    {
+      "name": "Goergia",
+      "attributes": {
+        "intelligence": 9,
+        "strength": 4,
+        "magic": 1,
+        "luck": 6
+      }
+    },
+    {
+      "name": "Mike",
+      "attributes": {
+        "intelligence": 3,
+        "strength": 2,
+        "magic": 9,
+        "luck": 5
+      }
+    }
+  ],
+  "applicants": [
+    {
+      "name": "Peter",
+      "attributes": {
+        "intelligence": 4,
+        "strength": 5,
+        "magic": 2,
+        "luck": 1
+      }
+    },
+    {
+      "name": "Scott",
+      "attributes": {
+        "intelligence": 7,
+        "strength": 4,
+        "magic": 3,
+        "luck": 2
+      }
+    },
+    {
+      "name": "Bernice",
+      "attributes": {
+        "intelligence": 1,
+        "strength": 1,
+        "magic": 1,
+        "luck": 10
+      }
+    }
+  ]
+}
+'''
+# Load the JSON string into a Python dictionary
+data = json.loads(json_str)
+
+the_scores = []
+
+for staff in data["team"]:
+    staff_name = staff["name"]
+    staff_intelligence = staff["attributes"]["intelligence"]
+    staff_strength = staff["attributes"]["strength"]
+    staff_magic = staff["attributes"]["magic"]
+    staff_luck = staff["attributes"]["luck"]
+
+
+#define variables for interns attributes 
+#define average of Intel, stregnth, etc. in comparison to staff
+#compat score is summation of average scores divided by 10 to keep number between 0-1.Kinda works, kinda doesnt.
+for interns in data['applicants']:
+    intern_name = interns["name"]
+    intern_intelligence = interns["attributes"]["intelligence"]
+    intern_strength = interns["attributes"]["strength"]
+    intern_magic = interns["attributes"]["magic"]
+    intern_luck = interns["attributes"]["luck"]
+    compat_I = intern_intelligence/staff_intelligence
+    compat_S = intern_strength/staff_strength
+    compat_M = intern_magic/staff_magic
+    compat_L = intern_luck/staff_luck
+    intern_score = (compat_I+compat_S+compat_M+compat_L)/10
+
+#add necessary elements to score applicants
+    the_scores.append({'name': intern_name, 'score': round(intern_score,3)})
+new_string = json.dumps(the_scores, indent=3, sort_keys=True)
+print(the_scores)
+
+
+
+
+# I wanted to use this, but it was not iterable. This is how I would have normalized the numbers with just dividing by 10
+    #print(intern_compat)
+    #to normalize numbers into a range between 0-1 zi = (xi – min(x)) / (max(x) – min(x))
+    #zi: The ith normalized value in the dataset
+    #xi: The ith value in the dataset
+    #min(x): The minimum value in the dataset
+    #max(x): The maximum value in the dataset
+  
+
+
+
